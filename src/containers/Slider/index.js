@@ -11,13 +11,18 @@ const Slider = () => {
   // Modification du sens > pour mettre les slides dans l'ordre décroissant //
     new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
+
+  // Modification de la const pour éviter une erreur de keys non uniques //
   const nextCard = () => {
-    setTimeout(
+    setTimeout(() => { 
+      if (!byDateDesc || byDateDesc.length === 0) {
+        return;
+      }
       // Ajout de -1 //
-      () => setIndex(index < byDateDesc.length -1 ? index + 1 : 0),
-      5000
-    );
+      setIndex(index < byDateDesc.length -1 ? index + 1 : 0);
+    },5000);
   };
+
   useEffect(() => {
     nextCard();
   });
@@ -40,18 +45,20 @@ const Slider = () => {
               </div>
             </div>
             </div>
-          </div>
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                // Changement de la clé //
+                  key={`${_.title}`}
                   type="radio"
                   name="radio-button"
-                  checked={index === radioIdx}
+                  // Changement checked -> defaultChecked pour éviter un warning //
+                  defaultChecked={idx === radioIdx}
                 />
               ))}
             </div>
+          </div>
           </div>
         </>
       ))}

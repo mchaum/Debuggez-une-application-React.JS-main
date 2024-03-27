@@ -125,12 +125,13 @@ const Page = () => {
         <h3>Notre dernière prestation</h3>
 
         <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
+        // Ajout de conditions si c'est indéfini //
+          imageSrc={last?.cover !== undefined ? last.cover : ""}
+          title={last?.title !== undefined ? last.title : ""}
           date={new Date(last?.date)}
           small
           // Ajout du type d'event //
-          label={last?.type}
+          label={last?.type !== undefined ? last.type : ""}
         />
       </div>
       <div className="col contact">
